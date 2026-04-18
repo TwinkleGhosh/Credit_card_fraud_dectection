@@ -143,7 +143,7 @@ Credit_card_fraud_detection/
 ## ▶️ How to Run
 
 ```bash
-git clone <https://github.com/TwinkleGhosh/Credit_card_fraud_dectection.git>
+git clone <https://github.com/TwinkleGhosh/CODSOFT_TASK1_Credit_card_fraud_dectection.git>
 cd Credit_card_fraud_detection
 
 python -m venv venv
