@@ -1,151 +1,188 @@
-📌 Credit Card Fraud Detection System
+# 📌 Credit Card Fraud Detection System
 
-🚀 Overview
+---
+
+## 🚀 Overview
 
 This project builds a Machine Learning system to detect fraudulent credit card transactions using real-world imbalanced data.
 
-The goal is to maximize fraud detection (recall) while maintaining a reasonable number of false alerts.
+The goal is to **maximize fraud detection (recall)** while maintaining a reasonable number of false alerts.
 
-📊 Problem Statement
+---
 
-Credit card fraud detection is a highly imbalanced classification problem where:
+## 📊 Problem Statement
 
-• Legitimate transactions ≈ 99.7%
-• Fraud transactions ≈ 0.3%
+Credit card fraud detection is a highly imbalanced classification problem:
+
+* Legitimate transactions ≈ **99.7%**
+* Fraud transactions ≈ **0.3%**
 
 Traditional models fail by predicting everything as legitimate.
 
-🎯 Objective
+---
 
-• Detect fraudulent transactions effectively
-• Handle extreme class imbalance
-• Optimize model using evaluation metrics like Recall & ROC-AUC
+## 🎯 Objective
 
-🧠 Approach
+* Detect fraudulent transactions effectively
+* Handle extreme class imbalance
+* Optimize using **Recall & ROC-AUC**
 
-1️⃣ Data Preprocessing
-• Removed irrelevant columns (ID, personal info, etc.)
-• Handled categorical variables using One-Hot Encoding
-• Sampled dataset for faster training
+---
 
-2️⃣ Models Used
+## 🧠 Approach
 
-Baseline → Random Forest without imbalance handling
-Class Weight → Random Forest with class_weight="balanced"
-SMOTE → Oversampling minority class using synthetic data
-XGBoost → Advanced boosting model
+### 🔹 1. Data Preprocessing
 
-3️⃣ Handling Class Imbalance
-• Applied Class Weighting
-• Applied SMOTE (Synthetic Oversampling)
+* Removed irrelevant columns
+* Applied One-Hot Encoding
+* Sampled dataset for faster training
 
-4️⃣ Evaluation Metrics
-• Precision
-• Recall (Primary focus)
-• F1-score
-• ROC-AUC Score
-• Confusion Matrix
+### 🔹 2. Models Used
 
-🏆 Final Model
+* **Baseline** → Random Forest (no imbalance handling)
+* **Class Weight** → `class_weight="balanced"`
+* **SMOTE** → Synthetic oversampling
+* **XGBoost** → Boosting model
 
-Selected Model:
+### 🔹 3. Handling Class Imbalance
+
+* Class Weighting
+* SMOTE
+
+### 🔹 4. Evaluation Metrics
+
+* Precision
+* **Recall (Primary Focus)**
+* F1-score
+* ROC-AUC
+* Confusion Matrix
+
+---
+
+## 🏆 Final Model
+
+**Selected Model:**
 Random Forest with Class Weight
 
+```python
 RandomForestClassifier(class_weight="balanced")
+```
 
-Final Threshold:
+**Threshold:**
+
+```python
 threshold = 0.5
+```
 
-📈 Final Results
+---
 
-Accuracy: 0.99
-Fraud Recall: 0.60 🔥
-Precision: 0.38
-ROC-AUC: 0.93
+## 📈 Results
 
-👉 Successfully detected 60% of fraud cases, a major improvement over baseline (0%).
+| Metric    | Value   |
+| --------- | ------- |
+| Accuracy  | 0.99    |
+| Recall    | 0.60 🔥 |
+| Precision | 0.38    |
+| ROC-AUC   | 0.93    |
 
-📊 Feature Importance
+👉 Successfully detected **60% fraud cases**
 
-Top features influencing fraud detection:
+---
 
-• 💰 Transaction Amount (amt)
-• 🌍 Location (latitude, longitude)
-• 🏙 City Population
-• 🛒 Transaction Category
+## 📊 Feature Importance
 
-👉 Indicates fraud depends on transaction behavior + location patterns
+* 💰 Transaction Amount
+* 🌍 Location (Latitude, Longitude)
+* 🏙 City Population
+* 🛒 Transaction Category
 
-📉 Threshold Tuning Insight
+---
 
-Lowering threshold increased recall but caused over-prediction of fraud.
-Optimal performance achieved at threshold = 0.5
+## 📉 Threshold Tuning
 
-🖥️ Deployment
+* Lower threshold → higher recall but more false positives
+* Best performance at **0.5**
 
-Built an interactive web app using Streamlit.
+---
 
-Features:
+## 🖥️ Deployment
 
-• Upload transaction dataset (CSV)
-• Predict fraud in real-time
-• Display fraud probability and predictions
+Built using **Streamlit**
 
-🗂️ Project Structure
+### Features:
 
+* Upload CSV
+* Real-time prediction
+* Fraud probability output
+
+---
+
+## 🗂️ Project Structure
+
+```bash
 Credit_card_fraud_detection/
-
-├── src/
-│ ├── data_preprocessing.py
-│ ├── train_model.py
-│ └── evaluate_model.py
-
+│
 ├── app/
-│ └── app.py
-
+│   └── app.py              # Streamlit app
+│
 ├── notebooks/
-│ └── EDA.ipynb
-
-├── main.py
+│   └── EDA.ipynb          # Exploratory Data Analysis
+│
+├── src/
+│   ├── data_preprocessing.py
+│   ├── train_model.py
+│   └── evaluate_model.py
+│
+├── main.py                # Run pipeline
 ├── requirements.txt
 └── README.md
+```
 
-▶️ How to Run
+---
 
-Clone Repository
+## ▶️ How to Run
+
+```bash
 git clone <https://github.com/TwinkleGhosh/Credit_card_fraud_dectection.git>
 cd Credit_card_fraud_detection
 
-Create Virtual Environment
 python -m venv venv
 venv\Scripts\activate
 
-Install Dependencies
 pip install -r requirements.txt
 
-Run Model
 python main.py
-
-Run Web App
 streamlit run app/app.py
+```
 
-💡 Key Learnings
+---
 
-• Handling imbalanced datasets
-• Importance of recall in fraud detection
-• Trade-off between precision vs recall
-• Real-world model evaluation
-• Deployment using Streamlit
+## 💡 Key Learnings
 
-🚀 Future Improvements
+* Handling imbalanced datasets
+* Importance of recall
+* Precision vs recall trade-off
+* Model deployment
 
-• Hyperparameter tuning (GridSearchCV)
-• Precision-Recall Curve visualization
-• Deploy on cloud (AWS / Streamlit Cloud)
-• Real-time API integration
+---
 
-👩‍💻 Author
+## 🚀 Future Improvements
 
-Twinkle Ghosh
+* Hyperparameter tuning
+* Precision-Recall curves
+* Cloud deployment
+* API integration
 
-⭐ If you found this useful, consider giving it a star!
+---
+
+## 👩‍💻 Author
+
+**Twinkle Ghosh**
+
+---
+
+⭐ Star this repo if you found it useful!
+
+
+---
+
