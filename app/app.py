@@ -50,7 +50,22 @@ if uploaded_file is not None:
         # predict probabilities
         probs = model.predict_proba(data)[:, 1]
 
-        threshold = 0.1
+        threshold = st.slider(
+            "Select Fraud Detection Threshold (Lower = More Fraud Detection)",
+            0.1,
+            0.9,
+            0.5,
+            0.05,
+        )
+
+        if threshold < 0.3:
+            st.warning("⚠️ Low threshold → High fraud detection but more false alarms")
+
+        elif threshold > 0.7:
+            st.warning("⚠️ High threshold → Fewer false alarms but may miss frauds")
+
+        else:
+            st.success("✅ Balanced threshold selected")
 
         predictions = (probs >= threshold).astype(int)
 
@@ -61,9 +76,34 @@ if uploaded_file is not None:
         st.dataframe(data.head())
 
         fraud_count = sum(predictions)
+        legit_count = len(predictions) - fraud_count
+        total_count = len(predictions)
+        fraud_percent = (fraud_count / total_count) * 100
 
+        # show count + percentage
         st.write(f"🚨 Fraud Transactions Detected: {fraud_count}")
+        st.write(f"📈 Fraud Percentage: {fraud_percent:.2f}%")
+        st.write(f"✅ Legit: {legit_count}")
 
-else:
+        # graph 1: fraud vs legit count
+        st.subheader("📊 Fraud vs Legit Transactions")
 
-    st.info("Please upload a CSV file to begin.")
+        chart_data = pd.DataFrame(
+            {
+                "Type": ["Legit", "Fraud"],
+                "Count": [total_count - fraud_count, fraud_count],
+            }
+        )
+
+        st.bar_chart(chart_data.set_index("Type"))
+
+        # graph 2: probability distribution
+        st.subheader("📉 Fraud Probability Distribution")
+
+        st.line_chart(probs)
+
+st.info(
+    "🔍 Predictions are based on probability scores from the model. "
+    "Transactions above the selected threshold are classified as fraud. "
+    "Lower thresholds increase fraud detection (recall) but may increase false positives."
+)
